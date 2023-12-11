@@ -49,6 +49,8 @@ def congratulate_player(winner):
 
 def play_round():
     game_field = [["_"] * FIELD_SIZE for _ in range(FIELD_SIZE)]
+    print_field(game_field)
+
     current_player = FIRST_PLAYER
 
     while not all(row.count('_') == 0 for row in game_field):
