@@ -34,8 +34,11 @@ def print_field(field):
     return
 
 
-def check_winner(row, col):
-    return winner
+def check_winner(field):
+    transposed_field = [list(row) for row in zip(*field)]
+    diagonals = [field[i][i] for i in range(0, 3)], [field[i][-(i + 1)] for i in range(0, 3)]
+    possible_wins = field + transposed_field + list(diagonals)
+    return next((row[0] for row in possible_wins if row.count(row[0]) == 3 and row[0] != '_'), None)
 
 
 def congratulate_player(winner):
