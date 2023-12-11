@@ -1,7 +1,8 @@
 FIRST_PLAYER = 'X'
 SECOND_PLAYER = 'O'
+FIELD_SIZE = 3
 
-is_valid_coordinate = lambda x: 0 <= x < 3
+is_valid_coordinate = lambda x: 0 <= x < FIELD_SIZE
 coordinate_to_index = lambda x: int(x) - 1
 
 
@@ -15,7 +16,7 @@ def input_move(field):
         try:
             row, column = map(coordinate_to_index, input("Enter a row and a column to make a move: ").split(' '))
             if not all(map(is_valid_coordinate, (row, column))):
-                print("Row and column values must be in range 1-3.")
+                print(f"Row and column values must be in range 1-{FIELD_SIZE}.")
                 continue
             if not is_cell_free(row, column, field):
                 print("This cell is already taken! Choose another one.")
@@ -27,33 +28,28 @@ def input_move(field):
 
 
 def print_field(field):
-    print("-" * 3)
+    optimal_dash_num = FIELD_SIZE * 2 + 3
+    print("-" * optimal_dash_num)
     for row in field:
         print("|", *row, "|")
-    print("-" * 3)
+    print("-" * optimal_dash_num)
     return
 
 
 def check_winner(field):
     transposed_field = [list(row) for row in zip(*field)]
-    diagonals = [field[i][i] for i in range(0, 3)], [field[i][-(i + 1)] for i in range(0, 3)]
+    diagonals = [field[i][i] for i in range(0, FIELD_SIZE)], [field[i][-(i + 1)] for i in range(0, FIELD_SIZE)]
     possible_wins = field + transposed_field + list(diagonals)
-    return next((row[0] for row in possible_wins if row.count(row[0]) == 3 and row[0] != '_'), None)
+    return next((row[0] for row in possible_wins if row.count(row[0]) == FIELD_SIZE and row[0] != '_'), None)
 
 
 def congratulate_player(winner):
     return print(f"{winner} won. Cheers!")
 
 
-def play():
-    game_field = [
-        [" ", " ", " "],
-        [" ", " ", " "],
-        [" ", " ", " "]
-    ]
-
+def play_round():
+    game_field = [["_"] * FIELD_SIZE for _ in range(FIELD_SIZE)]
     current_player = FIRST_PLAYER
-    winner = None
 
     while not all(row.count('_') == 0 for row in game_field):
         print(f"Current move: {current_player}")
