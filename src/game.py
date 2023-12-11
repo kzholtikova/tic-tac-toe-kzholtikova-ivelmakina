@@ -39,7 +39,7 @@ def check_winner(row, col):
 
 
 def congratulate_player(winner):
-    return winner
+    return print(f"{winner} won. Cheers!")
 
 
 def play():
