@@ -1,22 +1,21 @@
-first_player = 'X'
-second_player = 'O'
+import game
 
-game_field = [
-    [" ", " ", " "],
-    [" ", " ", " "],
-    [" ", " ", " "]
-]
 
-# first player is first to make a move
-current_player = first_player
+def get_valid_answer():
+    answer = input("Do you want a return match? ")
+    while answer.lower() not in ['y', 'n', 'yes', 'no']:
+        answer = input("Do you want a return match? ")
+    return answer.lower()
 
-row, column = input_move()
-game_field[row][column] = current_player
-print_field()
-winner = check_winner()
 
-if winner is not None:
-    congratulate_player(winner)
-    quit()
+def play():
+    playing = True
+    while playing:
+        print("3. 2. 1. GO!!!")
+        winner = game.play_round()
+        playing = get_valid_answer() in ['y', 'yes']
 
-current_player = first_player if current_player == second_player else second_player
+    print("Bye!")
+
+
+play()
