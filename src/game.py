@@ -26,7 +26,11 @@ def input_move(field):
             return row, column
 
 
-def print_field():
+def print_field(field):
+    print("-" * 3)
+    for row in field:
+        print("|", *row, "|")
+    print("-" * 3)
     return
 
 
