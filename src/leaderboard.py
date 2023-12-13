@@ -39,3 +39,23 @@ class Leaderboard:
     def add_player(player: object):
         with open(LEADERBOARD_PATH, "a") as file:
             file.write(player.__str__() + "\n")
+
+    def record_game_results(self, winner, player1, player2):
+        all_usernames = [player.username for player in Leaderboard().players]
+        if player1.username not in all_usernames:
+            self.add_player(player1)
+        if player2.username not in all_usernames:
+            self.add_player(player2)
+        self.load_leaderboard()
+
+        current_players = [player for player in self.players if player.username in [player1.username, player2.username]]
+        if winner is None:
+            for player in current_players:
+                player.ties += 1
+            return
+
+        for player in current_players:
+            if player.username == winner.username:
+                player.victories += 1
+            else:
+                player.defeats += 1
