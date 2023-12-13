@@ -3,7 +3,7 @@ import leaderboard
 FIRST_PLAYER_SIGN = "X"
 SECOND_PLAYER_SIGN = "O"
 
-is_valid_name = lambda x: x.strip() != ""
+is_valid_name = lambda x: x.isalnum()
 is_valid_command = lambda x: x.lower() in ("play", "leaderboard", "clear", "quit")
 
 
