@@ -1,22 +1,9 @@
-first_player = 'X'
-second_player = 'O'
+is_valid_name = lambda x: x.strip() != ""
 
-game_field = [
-    [" ", " ", " "],
-    [" ", " ", " "],
-    [" ", " ", " "]
-]
 
-# first player is first to make a move
-current_player = first_player
-
-row, column = input_move()
-game_field[row][column] = current_player
-print_field()
-winner = check_winner()
-
-if winner is not None:
-    congratulate_player(winner)
-    quit()
-
-current_player = first_player if current_player == second_player else second_player
+def ask_name(input_text):
+    name = input(input_text)
+    while not is_valid_name(name):
+        print("Please, enter player's name.")
+        name = input(input_text)
+    return name
