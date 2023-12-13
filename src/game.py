@@ -1,16 +1,17 @@
+import computer_player as computer
+
+
 FIRST_PLAYER = 'X'
 SECOND_PLAYER = 'O'
 FIELD_SIZE = 3
+INITIAL_DEPTH = FIELD_SIZE * FIELD_SIZE
 
 is_valid_coordinate = lambda x: 0 <= x < FIELD_SIZE
 coordinate_to_index = lambda x: int(x) - 1
+get_empty_cells = lambda field: [(x, y) for x, row in enumerate(field) for y, cell in enumerate(row)]
 
 
-def is_cell_free(row, col, field):
-    return field[row][col] == '_'
-
-
-def input_move(field):
+def input_move(field, empty_cells):
     is_valid_move = False
     while not is_valid_move:
         try:
@@ -18,7 +19,7 @@ def input_move(field):
             if not all(map(is_valid_coordinate, (row, column))):
                 print(f"Row and column values must be in range 1-{FIELD_SIZE}.")
                 continue
-            if not is_cell_free(row, column, field):
+            if (row, column) not in empty_cells:
                 print("This cell is already taken! Choose another one.")
                 continue
         except ValueError as e:
@@ -53,9 +54,10 @@ def play_round():
 
     current_player = FIRST_PLAYER
 
-    while not all(row.count('_') == 0 for row in game_field):
+    while len(get_empty_cells()) > 0:
         print(f"Current move: {current_player}")
-        row, column = input_move(game_field)
+        row, column = input_move(game_field) if current_player == FIRST_PLAYER \
+            else computer.get_best_move(game_field, INITIAL_DEPTH, True)
         game_field[row][column] = current_player
         print_field(game_field)
         winner = check_winner(game_field)
@@ -67,4 +69,4 @@ def play_round():
         current_player = FIRST_PLAYER if current_player == SECOND_PLAYER else SECOND_PLAYER
 
     print("It's a tie!")
-    return FIRST_PLAYER, SECOND_PLAYER
+    return
