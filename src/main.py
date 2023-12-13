@@ -4,6 +4,7 @@ FIRST_PLAYER_SIGN = "X"
 SECOND_PLAYER_SIGN = "O"
 
 is_valid_name = lambda x: x.strip() != ""
+is_valid_command = lambda x: x.lower() in ("play", "leaderboard", "clear", "quit")
 
 
 def ask_name(input_text):
@@ -30,3 +31,10 @@ def play():
     second_player.welcome_message()
 
     title_players(FIRST_PLAYER_SIGN, first_player, second_player)
+
+def get_command():
+    command = input("Please, enter one of this commands (play, leaderboard, clear, guit): ")
+    while not is_valid_command(command):
+        print("Please, enter a valid command (play, leaderboard, clear)")
+        command = input("Please, enter one of the commands (play, leaderboard, clear, quit): ")
+    return command
