@@ -3,8 +3,17 @@ import game
 # from game import FIRST_PLAYER, SECOND_PLAYER, get_empty_cells, check_winner -> error???
 
 
+USERNAME = "computer"
+
+
 def evaluate(field, depth):
-    return 0
+    winner = game.check_winner(field)
+    if winner == game.FIRST_PLAYER:
+        return -10
+    elif winner == game.SECOND_PLAYER:
+        return 10
+    else:
+        return 0
 
 
 def minimax(field, depth, is_max_player):
