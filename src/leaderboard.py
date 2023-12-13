@@ -79,3 +79,8 @@ class Leaderboard:
         for rank, player in enumerate(self.players, start=1):
             print("{:<1}. {:<17} {:<3} {:<3} {:<3}".format(rank, player.username, player.victories, player.defeats,
                                                            player.ties))
+
+    @staticmethod
+    def clear_leaderboard():
+        file = open(LEADERBOARD_PATH, "w")
+        file.close()
