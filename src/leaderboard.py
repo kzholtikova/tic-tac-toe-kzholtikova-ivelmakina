@@ -8,6 +8,9 @@ class Player:
         self.defeats = defeats
         self.ties = ties
 
+    def __str__(self):
+        return f"{self.username}\t{self.victories}\t{self.defeats}\t{self.ties}"
+
     def welcome_message(self):
         all_usernames = [player.username for player in Leaderboard().players]
         if self.username in all_usernames:
@@ -19,6 +22,7 @@ class Player:
 class Leaderboard:
     def __init__(self):
         self.players = []
+        self.load_leaderboard()
 
     def load_leaderboard(self):
         try:
@@ -30,3 +34,8 @@ class Leaderboard:
                     self.players.append(Player(username, victories, defeats, ties))
         except FileNotFoundError as e:
             pass
+
+    @staticmethod
+    def add_player(player: object):
+        with open(LEADERBOARD_PATH, "a") as file:
+            file.write(player.__str__() + "\n")
