@@ -67,3 +67,15 @@ class Leaderboard:
         with open(LEADERBOARD_PATH, "w") as file:
             for player in self.players:
                 file.write(player.__str__() + "\n")
+
+    def display_leaderboard(self):
+        if len(self.players) == 0:
+            print("There were no any rounds yet :(")
+            return
+
+        print("{:<20} {:<3} {:<3} {:<3}".format("player", "w", "d", "l"))
+        print("-" * 30)
+
+        for rank, player in enumerate(self.players, start=1):
+            print("{:<1}. {:<17} {:<3} {:<3} {:<3}".format(rank, player.username, player.victories, player.defeats,
+                                                           player.ties))
