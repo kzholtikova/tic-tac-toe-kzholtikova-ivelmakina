@@ -5,3 +5,9 @@ class Player:
         self.defeats = defeats
         self.ties = ties
 
+
+class Leaderboard:
+    def __init__(self):
+        self.players = []
+
+
