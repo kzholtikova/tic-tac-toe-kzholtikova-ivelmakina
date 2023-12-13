@@ -8,6 +8,13 @@ class Player:
         self.defeats = defeats
         self.ties = ties
 
+    def welcome_message(self):
+        all_usernames = [player.username for player in Leaderboard().players]
+        if self.username in all_usernames:
+            print(f"Hi, {self.username}. Welcome again!")
+        else:
+            print(f"Hi, {self.username}! Good luck!")
+
 
 class Leaderboard:
     def __init__(self):
