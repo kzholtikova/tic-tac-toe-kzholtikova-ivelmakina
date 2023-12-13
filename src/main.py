@@ -32,9 +32,19 @@ def play():
 
     title_players(FIRST_PLAYER_SIGN, first_player, second_player)
 
+
 def get_command():
     command = input("Please, enter one of this commands (play, leaderboard, clear, guit): ")
     while not is_valid_command(command):
         print("Please, enter a valid command (play, leaderboard, clear)")
         command = input("Please, enter one of the commands (play, leaderboard, clear, quit): ")
     return command
+
+
+def execute_command(command):
+    if command == "play":
+        play()
+    elif command == "leaderboard":
+        leaderboard.Leaderboard().display_leaderboard()
+    elif command == "clear":
+        leaderboard.Leaderboard().clear_leaderboard()
