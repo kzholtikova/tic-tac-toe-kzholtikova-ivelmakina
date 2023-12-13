@@ -1,35 +1,34 @@
 from math import inf
-from game import FIRST_PLAYER, SECOND_PLAYER, FIELD_SIZE, get_empty_cells, check_winner
+import game
+# from game import FIRST_PLAYER, SECOND_PLAYER, get_empty_cells, check_winner -> error???
 
 
 def evaluate(field, depth):
-    # verify by depth if the game state is terminate
-    """
-    Evaluate the current state of the game.
-    Returns:
-        -10 if 'X' wins, 10 if 'O' wins, 0 for a tie, None if the game is ongoing.
-    """
-    # Use check_winner() here to determine if there's a winner or if the game is ongoing
-    return
+    return 0
 
 
-def get_best_move(field, depth, is_max_player):
-    score = evaluate(field, depth)
-    if score is not None:
-        return score
+def minimax(field, depth, is_max_player):
+    if depth == 0:
+        score = evaluate(field, depth)
+        return [None, score]
 
-    best_score = -inf if is_max_player else inf
-    best_move = (-inf, -inf) if is_max_player else (inf, inf)
-    player = SECOND_PLAYER if is_max_player else FIRST_PLAYER
+    best = [None, -inf] if is_max_player else [None, inf]
+    player = game.SECOND_PLAYER if is_max_player else game.FIRST_PLAYER
 
-    empty_cells = get_empty_cells(field)
+    empty_cells = game.get_empty_cells(field)
     for cell in empty_cells:
-        x, y = zip(*cell)
-        # print(x, y)
+        x, y = cell[0], cell[1]
         field[x][y] = player
-        score = get_best_move(field, depth - 1, not is_max_player)
-        best_score = max(best_score, score) if is_max_player else min(best_score, score)
-        best_move = cell if best_score == score else best_move
+        new_score = minimax(field, depth - 1, not is_max_player)
+        new_score[0] = cell
         field[x][y] = '_'
 
-    return best_move
+        if (is_max_player and new_score[1] > best[1]) or (not is_max_player and new_score[1] < best[1]):
+            best = new_score
+    return best
+
+
+def get_best_move(field, depth):
+    best_move_x, best_move_y = minimax(field, depth, True)[0]
+    return best_move_x, best_move_y
+
