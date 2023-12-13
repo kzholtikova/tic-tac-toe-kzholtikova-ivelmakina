@@ -59,3 +59,11 @@ class Leaderboard:
                 player.victories += 1
             else:
                 player.defeats += 1
+
+    def save_leaderboard(self, winner, player1, player2):
+        self.record_game_results(winner, player1, player2)
+        self.players = sorted(self.players, key=lambda p: (-p.victories, -(p.victories + p.defeats + p.ties)))
+
+        with open(LEADERBOARD_PATH, "w") as file:
+            for player in self.players:
+                file.write(player.__str__() + "\n")
