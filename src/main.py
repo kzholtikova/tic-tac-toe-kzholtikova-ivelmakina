@@ -48,3 +48,16 @@ def execute_command(command):
         leaderboard.Leaderboard().display_leaderboard()
     elif command == "clear":
         leaderboard.Leaderboard().clear_leaderboard()
+
+        
+def main():
+    command = get_command()
+    while command != "quit":
+        execute_command(command)
+        command = get_command()
+
+    print("Okay, see you!")
+    exit()
+
+
+main()
