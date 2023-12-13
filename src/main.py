@@ -1,3 +1,4 @@
+import game
 import leaderboard
 
 FIRST_PLAYER_SIGN = "X"
@@ -6,6 +7,13 @@ SECOND_PLAYER_SIGN = "O"
 is_valid_name = lambda x: x.isalnum()
 is_valid_command = lambda x: x.lower() in ("play", "leaderboard", "clear", "quit")
 
+
+def get_valid_answer():
+    answer = input("Do you want a return match? ")
+    while answer.lower() not in ['y', 'n', 'yes', 'no']:
+        answer = input("Do you want a return match? ")
+    return answer.lower()
+  
 
 def ask_name(input_text):
     name = input(input_text)
@@ -22,15 +30,23 @@ def title_players(winner_sign, player1, player2):
         leaderboard.Leaderboard().save_leaderboard(player2, player1, player2)
     else:
         leaderboard.Leaderboard().save_leaderboard(None, player1, player2)
-
-
+        
+        
 def play():
-    first_player = leaderboard.Player(ask_name("Please, enter first player's name: "))
-    second_player = leaderboard.Player(ask_name("Please, enter second player's name: "))
-    first_player.welcome_message()
-    second_player.welcome_message()
+    playing = True
+    while playing:
+        first_player = leaderboard.Player(ask_name("Please, enter first player's name: "))
+        second_player = leaderboard.Player(ask_name("Please, enter second player's name: "))
+        first_player.welcome_message()
+        second_player.welcome_message()
+      
+        print("3. 2. 1. GO!!!")
+        winner = game.play_round()
+        title_players(winner, first_player, second_player)
+          
+        playing = get_valid_answer() in ['y', 'yes']
 
-    title_players(FIRST_PLAYER_SIGN, first_player, second_player)
+    print("Bye!")
 
 
 def get_command():
