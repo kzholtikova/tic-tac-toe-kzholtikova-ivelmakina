@@ -17,7 +17,7 @@ def evaluate(field, depth):
 
 def minimax(field, depth, is_max_player):
     if depth == 0:
-        score = evaluate(field, depth , is_max_player)
+        score = evaluate(field, depth)
         return [None, score]
 
     best = [None, -inf] if is_max_player else [None, inf]
