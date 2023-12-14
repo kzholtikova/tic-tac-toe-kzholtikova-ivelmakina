@@ -1,24 +1,23 @@
 from math import inf
 import game
-# from game import FIRST_PLAYER, SECOND_PLAYER, get_empty_cells, check_winner -> error???
 
 
 USERNAME = "compik"
 
 
-def evaluate(field):
+def evaluate(field, depth, max):
     winner = game.check_winner(field)
     if winner == game.FIRST_PLAYER:
-        return -10
+        return -1000 + depth
     elif winner == game.SECOND_PLAYER:
-        return 10
+        return 1000 - depth
     else:
         return 0
 
 
 def minimax(field, depth, is_max_player):
     if depth == 0:
-        score = evaluate(field)
+        score = evaluate(field, depth , is_max_player)
         return [None, score]
 
     best = [None, -inf] if is_max_player else [None, inf]
