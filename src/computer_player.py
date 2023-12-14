@@ -6,7 +6,7 @@ import game
 USERNAME = "computer"
 
 
-def evaluate(field, depth):
+def evaluate(field):
     winner = game.check_winner(field)
     if winner == game.FIRST_PLAYER:
         return -10
@@ -18,7 +18,7 @@ def evaluate(field, depth):
 
 def minimax(field, depth, is_max_player):
     if depth == 0:
-        score = evaluate(field, depth)
+        score = evaluate(field)
         return [None, score]
 
     best = [None, -inf] if is_max_player else [None, inf]
@@ -40,4 +40,3 @@ def minimax(field, depth, is_max_player):
 def get_best_move(field, depth):
     best_move_x, best_move_y = minimax(field, depth, True)[0]
     return best_move_x, best_move_y
-

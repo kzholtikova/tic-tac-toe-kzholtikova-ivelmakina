@@ -4,14 +4,14 @@ import computer_player as computer
 FIRST_PLAYER = 'X'
 SECOND_PLAYER = 'O'
 FIELD_SIZE = 3
-INITIAL_DEPTH = FIELD_SIZE * FIELD_SIZE
 
 is_valid_coordinate = lambda x: 0 <= x < FIELD_SIZE
 coordinate_to_index = lambda x: int(x) - 1
-get_empty_cells = lambda field: [(x, y) for x, row in enumerate(field) for y, cell in enumerate(row)]
+get_empty_cells = lambda field: [(x, y) for x, row in enumerate(field) for y, cell in enumerate(row)
+                                 if cell == "_"]
 
 
-def input_move(field, empty_cells):
+def input_move(field):
     is_valid_move = False
     while not is_valid_move:
         try:
@@ -19,7 +19,7 @@ def input_move(field, empty_cells):
             if not all(map(is_valid_coordinate, (row, column))):
                 print(f"Row and column values must be in range 1-{FIELD_SIZE}.")
                 continue
-            if (row, column) not in empty_cells:
+            if (row, column) not in get_empty_cells(field):
                 print("This cell is already taken! Choose another one.")
                 continue
         except ValueError as e:
@@ -54,10 +54,10 @@ def play_round():
 
     current_player = FIRST_PLAYER
 
-    while len(get_empty_cells()) > 0:
+    while len(get_empty_cells(game_field)) > 0:
         print(f"Current move: {current_player}")
         row, column = input_move(game_field) if current_player == FIRST_PLAYER \
-            else computer.get_best_move(game_field, INITIAL_DEPTH, True)
+            else computer.get_best_move(game_field, len(get_empty_cells(game_field)))
         game_field[row][column] = current_player
         print_field(game_field)
         winner = check_winner(game_field)

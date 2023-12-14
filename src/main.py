@@ -1,5 +1,6 @@
 import game
 import leaderboard
+import computer_player as computer
 
 FIRST_PLAYER_SIGN = "X"
 SECOND_PLAYER_SIGN = "O"
@@ -36,7 +37,7 @@ def play():
     playing = True
     while playing:
         first_player = leaderboard.Player(ask_name("Please, enter first player's name: "))
-        second_player = leaderboard.Player(ask_name("Please, enter second player's name: "))
+        second_player = leaderboard.Player(computer.USERNAME)
         first_player.welcome_message()
         second_player.welcome_message()
       
