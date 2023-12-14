@@ -1,10 +1,11 @@
 import game
 import leaderboard
+import computer_player as computer
 
 FIRST_PLAYER_SIGN = "X"
 SECOND_PLAYER_SIGN = "O"
 
-is_valid_name = lambda x: x.isalnum()
+is_valid_name = lambda x: x.isalnum() and len(x) <= 11
 is_valid_command = lambda x: x.lower() in ("play", "leaderboard", "clear", "quit")
 
 
@@ -18,7 +19,7 @@ def get_valid_answer():
 def ask_name(input_text):
     name = input(input_text)
     while not is_valid_name(name):
-        print("Please, enter player's name.")
+        print("Please, enter valid player's name (play).")
         name = input(input_text)
     return name
 
@@ -33,17 +34,17 @@ def title_players(winner_sign, player1, player2):
         
         
 def play():
+    first_player = leaderboard.Player(ask_name("Please, enter first player's name: "))
+    second_player = leaderboard.Player(computer.USERNAME)
+    first_player.welcome_message()
+    second_player.welcome_message()
+
     playing = True
     while playing:
-        first_player = leaderboard.Player(ask_name("Please, enter first player's name: "))
-        second_player = leaderboard.Player(ask_name("Please, enter second player's name: "))
-        first_player.welcome_message()
-        second_player.welcome_message()
-      
         print("3. 2. 1. GO!!!")
         winner = game.play_round()
         title_players(winner, first_player, second_player)
-          
+
         playing = get_valid_answer() in ['y', 'yes']
 
     print("Bye!")
