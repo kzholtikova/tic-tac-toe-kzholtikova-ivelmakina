@@ -5,7 +5,7 @@ import game
 USERNAME = "compik"
 
 
-def evaluate(field, depth, max):
+def evaluate(field, depth):
     winner = game.check_winner(field)
     if winner == game.FIRST_PLAYER:
         return -1000 + depth
