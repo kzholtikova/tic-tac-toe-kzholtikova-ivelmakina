@@ -3,7 +3,7 @@ import game
 # from game import FIRST_PLAYER, SECOND_PLAYER, get_empty_cells, check_winner -> error???
 
 
-USERNAME = "computer"
+USERNAME = "compik"
 
 
 def evaluate(field):
