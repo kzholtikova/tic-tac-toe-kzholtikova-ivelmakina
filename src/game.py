@@ -56,8 +56,10 @@ def play_round():
 
     while len(get_empty_cells(game_field)) > 0:
         print(f"Current move: {current_player}")
+        empty_cells_number = len(get_empty_cells(game_field))
+        depth = empty_cells_number - 4 if empty_cells_number > 4 else empty_cells_number
         row, column = input_move(game_field) if current_player == FIRST_PLAYER \
-            else computer.get_best_move(game_field, len(get_empty_cells(game_field)))
+            else computer.get_best_move(game_field, depth)
         game_field[row][column] = current_player
         print_field(game_field)
         winner = check_winner(game_field)
